@@ -11,6 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return 'holas';
-});
+Route::resource('/', 'BoardController');
+
+Route::resource('/mesas', 'MesasController');
+
+Route::post('/mesas/create', 'MesasController@Create');
+
+Route::get('/mesas/show/{id}', 'MesasController@show');
+
+Route::put('/mesas/show/{id}', 'MesasController@editProductoMesa');
+
+Route::post('/mesas/createProductoMesa', 'MesasController@createProductoMesa');
+
+Route::delete('/mesas/delete/{mesa}', 'MesasController@deleteProductoMesa');
