@@ -8,12 +8,12 @@ class Venta extends Model
 {
   protected $fillable =
   [
-      'nombre', 'precio' , 'tipo',
+      'descuento', 'vendido_en' , 'precio_venta',
   ];
 
 
-  public function productoMesas()
+  public function mesasProductos()
   {
-    return $this->belongsToMany('App\ProductoMesa');
+    return $this->belongsToMany('App\MesasProductos');
   }
 }

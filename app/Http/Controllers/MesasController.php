@@ -39,6 +39,14 @@ class MesasController extends Controller
         return redirect()->action('MesasController@index');
     }
 
+    public function deleteMesa($mesa)
+    {
+      //Busca la tupla con el producto de esa mesa
+        $productosMesa = MesasProductos::where('mesa_id', $mesa)->delete();
+        $mesaBorrar = Mesa::where('id', $mesa)->delete();
+
+        return redirect()->action('MesasController@index');
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -81,9 +89,14 @@ class MesasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        $mesaEdit = Mesa::find($request->input('mesa_id'));
+
+        $mesaEdit->nombre = $request->input('nombre');
+
+        $mesaEdit->save();
+        return redirect()->action('MesasController@index');
     }
 
     /**

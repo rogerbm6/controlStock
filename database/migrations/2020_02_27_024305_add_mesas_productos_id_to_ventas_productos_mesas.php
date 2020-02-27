@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVentasTable extends Migration
+class AddMesasProductosIdToVentasProductosMesas extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateVentasTable extends Migration
      */
     public function up()
     {
-        Schema::create('ventas', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('porcentaje')->nullable();
-            $table->dateTime('vendido_en', 0);
-            $table->double('precio_venta', 5, 2);
-            $table->timestamps();
+        Schema::table('ventas_productos_mesas', function (Blueprint $table) {
+          $table->foreign('productomesa_id')->references('id')->on('mesas_productos');
         });
     }
 
@@ -29,6 +25,8 @@ class CreateVentasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ventas');
+        Schema::table('ventas_productos_mesas', function (Blueprint $table) {
+            //
+        });
     }
 }

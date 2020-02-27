@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Mesa;
 use App\Producto;
 use App\Venta;
+use App\MesasProductos;
 
 class BoardController extends Controller
 {
@@ -19,7 +20,7 @@ class BoardController extends Controller
     public function index()
     {
       $mesas = Mesa::all();
-      $productos = DB::table('productos')->count();
+      $productos = MesasProductos::sum('cantidad');
     //  $venta = DB::table('ventas')->select('precio_venta');
       //dd($venta);
       return view('board/index', ['arrayMesas'=>$mesas, 'productos'=>$productos]);

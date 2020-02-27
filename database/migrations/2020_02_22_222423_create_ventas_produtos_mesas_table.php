@@ -13,16 +13,18 @@ class CreateVentasProdutosMesasTable extends Migration
      */
     public function up()
     {
-        Schema::create('ventas_produtos_mesas', function (Blueprint $table)
+        Schema::create('ventas_productos_mesas', function (Blueprint $table)
         {
+          $table->increments('id');
 
           $table->unsignedInteger('venta_id');
           $table->unsignedInteger('productomesa_id');
 
           $table->foreign('venta_id')->references('id')->on('ventas');
-          $table->foreign('productomesa_id')->references('id')->on('productos_mesas');
 
           $table->integer('cantidad');
+
+          $table->timestamps();
         });
     }
 

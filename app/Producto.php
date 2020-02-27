@@ -20,6 +20,6 @@ class Producto extends Model
 
     public function mesas()
     {
-      return $this->belongsToMany('App\Mesa')->withPivot('cantidad');
+      return $this->belongsToMany('App\Mesa');
     }
 }

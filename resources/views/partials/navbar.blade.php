@@ -22,12 +22,12 @@
           <a class="nav-link" href="/mesas"><i class="fa fa-cubes fa-fw mr-2"></i>Mesas</a>
       </li>
       <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fa fa-cube fa-fw mr-2"></i>Productos</a>
+          <a class="nav-link" href="/productos"><i class="fa fa-cube fa-fw mr-2"></i>Productos</a>
       </li>
     </ul>
 
     <div class="my-2 my-md-3">
-        <a class="btn btn-primary" href="/mesas" target="_blank">Ventas</a>
+        <a class="btn btn-primary" href="/ventas">Ventas</a>
     </div>
   </div>
 </nav>

@@ -13,8 +13,7 @@ class CreateProductosMesasTable extends Migration
      */
     public function up()
     {
-        Schema::create('producto_mesas', function (Blueprint $table) {
-        });
+
     }
 
     /**
@@ -22,6 +21,6 @@ class CreateProductosMesasTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(){
     }
 }

@@ -10,8 +10,8 @@ class DatabaseSeeder extends Seeder
       * @return void
       */
      public function run()
-     {
-       /*$this->truncateTables([
+     {/*
+       $this->truncateTables([
          'users',
          'mesas',
          'productos'

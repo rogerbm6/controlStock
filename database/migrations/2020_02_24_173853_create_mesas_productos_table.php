@@ -19,7 +19,8 @@ class CreateMesasProductosTable extends Migration
             $table->unsignedInteger('producto_id');
             $table->unsignedInteger('mesa_id');
 
-            $table->foreign('producto_id')->references('id')->on('productos');
+            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('set null');
+
             $table->foreign('mesa_id')->references('id')->on('mesas');
 
             $table->integer('cantidad');
