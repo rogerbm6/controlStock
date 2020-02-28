@@ -151,10 +151,18 @@
             </table>
         </div>
     </div>
+    <div class="m-3 mb-5">
+        <a type="button" href="/imprimirDia" class="btn btn-sm btn-info m-1">
+            Ventas del dia
+        </a>
+        <a type="button" href="/imprimirMes" class="btn btn-sm btn-info m-1">
+            Ventas del mes
+        </a>
+        <a type="button" href="/imprimirDia" class="btn btn-sm btn-info m-1">
+            Ventas del año
+        </a>
+    </div>
 
-    <a type="button" href="{{route('imprimir')}}" class="btn btn-sm btn-info m-1">
-        <i class="fas fa-angle-left"></i> Imprimir
-    </a>
 </div>
 
 

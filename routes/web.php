@@ -74,8 +74,12 @@ Route::group(['middleware' => 'verified'], function () {
   Route::get('logout', 'Auth\LoginController@logout');
 
 
+  //ImprimirControll dia
+  Route::get('/imprimirDia', 'ImprimirController@show')->middleware('auth');
   //ImprimirControll
-  Route::name('imprimir')->get('/imprimir', 'ImprimirController@show')->middleware('auth')->middleware('language');
+  Route::get('/imprimirMes', 'ImprimirController@mes')->middleware('auth');
+  //ImprimirControll
+  Route::get('/imprimirAno', 'ImprimirController@ano')->middleware('auth');
 });
 
 Auth::routes();
