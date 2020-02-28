@@ -81,7 +81,7 @@
                 <thead class="thead-light">
                     <tr>
                         <th scope="col">Fecha-Hora</th>
-                        <th scope="col">porcentaje</th>
+                        <th scope="col">Descuento</th>
                         <th scope="col">Total</th>
                         <th scope="col"></th>
                         <th scope="col"></th>

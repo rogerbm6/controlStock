@@ -11,7 +11,7 @@
                     <h3 class="mb-0">Ventas</h3>
                 </div>
                 <div class="col">
-                    <h3 class="mb-0">Total : €</h3>
+                    <h3 class="mb-0">Total :{{$total}} €</h3>
                 </div>
             </div>
         </div>
@@ -29,23 +29,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($productos as $productor)
+                    @foreach ($productos as $producto)
 
                     <tr>
                         <th scope="row">
-                            {{$producto['producto']->nombre ?? ''}}
+                            {{$producto['producto']->nombre}}
                         </th>
                         <th>
-                            {{$producto['mesa']->nombre ?? ''}}
+                            {{$producto['mesa']->nombre}}
                         </th>
                         <th>
-                            {{$producto['cantidad'] ?? ''}}
+                            {{$producto['cantidad']}}
                         </th>
                         <th>
-                            {{$producto['producto']->precio ?? ''}}€
+                            {{$producto['producto']->precio}}€
                         </th>
                         <th>
-                            {{$producto['fecha']->vendido_en ?? ''}}
+                            {{$producto['fecha']->vendido_en}}
                         </th>
                     </tr>
                     @endforeach
