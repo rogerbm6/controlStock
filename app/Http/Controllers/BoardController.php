@@ -9,6 +9,9 @@ use App\Mesa;
 use App\Producto;
 use App\Venta;
 use App\MesasProductos;
+use App\User;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\RegistroFormRequest;
 
 class BoardController extends Controller
 {
@@ -40,6 +43,20 @@ class BoardController extends Controller
     //  $venta = DB::table('ventas')->select('precio_venta');
       //dd($venta);
       return view('board/index', ['arrayMesas'=>$mesas, 'productos'=>$productos, 'ano'=>$totalAnio,'mes'=>$totalMes,'dia'=>$totalDia]);
+    }
+
+    public function register(RegistroFormRequest $request)
+    {
+      if ($request->input('password')==$request->input('password_confirmation'))
+      {
+        $usuario = new User;
+        $usuario->name= $request->input('name');
+        $usuario->email=$request->input('email');
+        $usuario->password=Hash::make($request->input('password'));
+        $usuario->save();
+      }
+
+      return redirect()->action('BoardController@index');
     }
 
 }

@@ -80,8 +80,20 @@ Route::group(['middleware' => 'verified'], function () {
   Route::get('/imprimirMes', 'ImprimirController@mes')->middleware('auth');
   //ImprimirControll
   Route::get('/imprimirAno', 'ImprimirController@ano')->middleware('auth');
+
+
+  // Registration Routes...
+  Route::get('register', function () {
+    return view('register/nuevo');
+  })->name('register')->middleware('auth');
+  Route::post('register', 'BoardController@register')->middleware('auth');
+
+
 });
 
-Auth::routes();
+
+Auth::routes(['register'=>false]);
+
+
 
 Route::get('/home', 'BoardController@index')->middleware('auth')->name('home');
