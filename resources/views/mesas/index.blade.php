@@ -1,22 +1,35 @@
 @extends('layouts.master')
 
 @section('content')
-  <div class="row">
-      <div class="col-lg-12">
-          <section class="cta-section theme-bg-dark py-5 text-light">
-              <div class="container text-center">
-                  <h2 class="heading text-light">Gestion de mesas</h2>
-                  <div class="intro">Puedes administrar todas las mesas con tus productos</div>
+<div class="row">
+    <div class="col-lg-12">
+        <section class="cta-section theme-bg-dark py-5 text-light">
+            <div class="container text-center">
+                <h2 class="heading text-light">Gestion de mesas</h2>
+                <div class="intro">Puedes administrar todas las mesas con tus productos</div>
 
-              </div>
-              <!--//container-->
-          </section>
-      </div>
-  </div>
+            </div>
+            <!--//container-->
+        </section>
+    </div>
+</div>
 
 <div class="row p-3">
     <div class="col-md-9 col-sm-12">
+      @if ($errors->any())
 
+      <div class="row justify-content-center">
+          <div class="col-sm-12">
+              <div class="alert alert-danger">
+                  <ul>
+                      @foreach($errors->all() as $error)
+                          <li>{{$error}}</li>
+                          @endforeach
+                  </ul>
+              </div>
+          </div>
+      </div>
+      @endif
         <div class="row">
             @foreach ($arrayMesas as $mesa)
             <div class="col-xl-3 col-md-6 col-sm-4">
@@ -30,10 +43,10 @@
                         </div>
                         <p class="mt-3 mb-0 text-sm col-12">
                             <span class="text-success mr-2 d-inline"></i>
-                              <button type="button" class="btn btn-sm btn-success text-right d-inline" data-toggle="modal" data-target="#{{'m'.$mesa->id}}">
-                                  <i class="fas fa-edit"></i>
-                                  Editar
-                              </button></span><br>
+                                <button type="button" class="btn btn-sm btn-success text-right d-inline" data-toggle="modal" data-target="#{{'m'.$mesa->id}}">
+                                    <i class="fas fa-edit"></i>
+                                    Editar
+                                </button></span><br>
 
 
                         </p>
@@ -79,21 +92,23 @@
     <div class="col-sm-12 col-md-3 my-5">
         <p>
             <a class="btn btn-primary" data-toggle="collapse" href="#NuevaMesa" aria-expanded="false" aria-controls="collapseExample">
-              <i class="fa fa-plus-square" aria-hidden="true"></i>
+                <i class="fa fa-plus-square" aria-hidden="true"></i>
                 Nueva mesa
             </a>
         </p>
+
         <div class="collapse" id="NuevaMesa">
             <div class="card card-body">
                 <form method="post" action='/mesas/create'>
                     @csrf
                     <div class="form-group p-2">
                         <label for="nombre">Nombre</label>
-                        <input type="text" class="form-control" name="nombre" placeholder="Nombre aqui">
+                        <input type="text" class="form-control" name="nombre" placeholder="Nombre aqui" value="{{old('nombre')}}">
 
                         <button type="submit" class="mt-2 btn btn-primary">guardar</button>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>

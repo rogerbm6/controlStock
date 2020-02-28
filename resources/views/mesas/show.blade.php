@@ -7,6 +7,20 @@
 </a>
 
 <div class="col-md-11 m-2 p-2">
+
+  @if ($errors->any())
+  <div class="row justify-content-center">
+      <div class="col-sm-12">
+          <div class="alert alert-danger">
+              <ul>
+                  @foreach($errors->all() as $error)
+                      <li>{{$error}}</li>
+                      @endforeach
+              </ul>
+          </div>
+      </div>
+  </div>
+  @endif
     <div class="card mb-5">
         <div class="card-header border-0">
             <div class="row align-items-center">
@@ -43,7 +57,7 @@
                                             </select>
 
                                             <label for="cantidad">Cantidad</label>
-                                            <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="Cantidad">
+                                            <input type="text" class="form-control" id="cantidad" name="cantidad" placeholder="Cantidad" value="{{old('cantidad')}}">
 
                                             <button type="submit" class="mt-2 btn btn-sm btn-primary">guardar</button>
                                         </div>
@@ -142,7 +156,7 @@
                                                 <div class="form-group p-2 text-justify">
 
                                                     <label for="cantidad">Cantidad</label>
-                                                    <input type="number" class="form-control" id="cantidad" name="cantidad" value="{{$value['cantidad']}}" placeholder="Cantidad">
+                                                    <input type="text" class="form-control" id="cantidad" name="cantidad" value="{{$value['cantidad']}}" placeholder="Cantidad">
 
                                                     <button type="submit" style="display:inline" class="mt-2 btn btn-sm btn-primary">guardar</button>
                                                 </div>

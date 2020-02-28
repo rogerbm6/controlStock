@@ -19,76 +19,27 @@ class BoardController extends Controller
      */
     public function index()
     {
+      $anio=Venta::whereYear('vendido_en', date('Y'))->get();
+      $mes=Venta::whereMonth('vendido_en', date('m'))->get();
+      $dia=Venta::whereDay('vendido_en', date('d'))->get();
+      $totalAnio=0;
+      $totalMes=0;
+      $totalDia=0;
+      foreach ($anio as $value) {
+        $totalAnio += $value->precio_venta;
+      }
+      foreach ($mes as $value) {
+        $totalMes += $value->precio_venta;
+      }
+      foreach ($dia as $value) {
+        $totalDia += $value->precio_venta;
+      }
+
       $mesas = Mesa::all();
       $productos = MesasProductos::sum('cantidad');
     //  $venta = DB::table('ventas')->select('precio_venta');
       //dd($venta);
-      return view('board/index', ['arrayMesas'=>$mesas, 'productos'=>$productos]);
+      return view('board/index', ['arrayMesas'=>$mesas, 'productos'=>$productos, 'ano'=>$totalAnio,'mes'=>$totalMes,'dia'=>$totalDia]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

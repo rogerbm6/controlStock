@@ -16,6 +16,21 @@
 </div>
 
 <div class="col-md-11 m-2 p-2">
+
+    @if ($errors->any())
+    <div class="row justify-content-center">
+        <div class="col-sm-12">
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{$error}}</li>
+                        @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
+    @endif
+
     <div class="card mb-5">
         <div class="card-header border-0">
             <div class="row align-items-center">
@@ -43,8 +58,8 @@
                                         @csrf
                                         <div class="form-group p-2 text-justify">
 
-                                          <label for="porcentaje">Porcentaje</label>
-                                          <input type="number" class="form-control" id="porcentaje" name="porcentaje" placeholder="porcentaje">
+                                            <label for="porcentaje">Porcentaje</label>
+                                            <input type="number" class="form-control" id="porcentaje" name="porcentaje" placeholder="porcentaje" value="{{old('porcentaje')}}">
 
                                             <button type="submit" class="mt-2 btn btn-sm btn-primary">guardar</button>
                                         </div>
@@ -80,10 +95,10 @@
                             <a href="/ventas/productos/{{$venta->id}}">{{$venta->vendido_en}}</a>
                         </th>
                         <th>
-                          {{$venta->porcentaje}}%
+                            {{$venta->porcentaje}}%
                         </th>
                         <th>
-                          {{$venta->precio_venta}}€
+                            {{$venta->precio_venta}}€
                         </th>
                         <td>
                             <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#{{'v'.$venta->id}}">
@@ -136,6 +151,10 @@
             </table>
         </div>
     </div>
+
+    <a type="button" href="{{route('imprimir')}}" class="btn btn-sm btn-info m-1">
+        <i class="fas fa-angle-left"></i> Imprimir
+    </a>
 </div>
 
 

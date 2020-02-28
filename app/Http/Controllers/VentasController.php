@@ -10,6 +10,7 @@ use App\Producto;
 use App\Venta;
 use App\MesasProductos;
 use App\VentasProductosMesa;
+use App\Http\Requests\VentaFormRequest;
 
 class VentasController extends Controller
 {
@@ -20,7 +21,7 @@ class VentasController extends Controller
         return view('ventas/index', ['ventas'=>$ventas]);
     }
 
-    public function create(Request $request)
+    public function create(VentaFormRequest $request)
     {
         $venta = new Venta;
 
@@ -35,7 +36,7 @@ class VentasController extends Controller
         return redirect()->action('VentasController@index');
     }
 
-    public function update(Request $request, $id)
+    public function update(VentaFormRequest $request, $id)
     {
         $venta = Venta::find($id);
 

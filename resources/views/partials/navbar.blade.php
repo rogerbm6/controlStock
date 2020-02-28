@@ -1,5 +1,5 @@
 <header class="header text-center">
-  <h1 class="blog-name pt-lg-4 mb-0"><a href="/">LalaSlou admin</a></h1>
+  <h1 class="blog-name pt-lg-4 mb-0"><a href="/home">LalaSlou admin</a></h1>
 
   <nav class="navbar navbar-expand-lg navbar-dark" >
 
@@ -9,19 +9,19 @@
 
   <div id="navigation" class="collapse navbar-collapse flex-column" >
     <div class="profile-section pt-3 pt-lg-0">
-        <img class="profile-image mb-3 rounded-circle mx-auto" src="{{asset('img/logo2.png')}}" alt="image" >
+        <img class="profile-image mb-3 rounded-circle mx-auto" href='/home' src="{{asset('img/logo2.png')}}" alt="image" >
 
           <hr>
     </div><!--//profile-section-->
 
     <ul class="navbar-nav flex-column text-left">
-      <li class="nav-item active">
-          <a class="nav-link" href="/"><i class="fas fa-university fa-fw mr-2"></i>Resumen <span class="sr-only">(current)</span></a>
+      <li class="nav-item {{ Request::is('/home') ? 'active' : ''}}">
+          <a class="nav-link" href="/home"><i class="fas fa-university fa-fw mr-2"></i>Resumen <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item {{ Request::is('mesas') && ! Request::is('mesas/show')? 'active' : ''}}">
           <a class="nav-link" href="/mesas"><i class="fa fa-cubes fa-fw mr-2"></i>Mesas</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item {{ Request::is('productos') ? 'active' : ''}}">
           <a class="nav-link" href="/productos"><i class="fa fa-cube fa-fw mr-2"></i>Productos</a>
       </li>
     </ul>
@@ -29,6 +29,10 @@
     <div class="my-2 my-md-3">
         <a class="btn btn-primary" href="/ventas">Ventas</a>
     </div>
+
+    <li class="nav-item mt-3">
+        <a class="nav-link mt-5" href="/logout"><i class="mr-2"></i>Cerrar sesion</a>
+    </li>
   </div>
 </nav>
 </header>

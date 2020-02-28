@@ -36,7 +36,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Total ventas</h5>
-                                <span class="h2 font-weight-bold mb-0">350,897</span>
+                                <span class="h2 font-weight-bold mb-0">{{$dia}}</span>
                             </div>
                         </div>
                         <p class="mt-3 mb-0 text-sm">
@@ -53,7 +53,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Ventas del mes</h5>
-                                <span class="h2 font-weight-bold mb-0">2,356</span>
+                                <span class="h2 font-weight-bold mb-0">{{$mes}}</span>
                             </div>
                         </div>
                         <p class="mt-3 mb-0 text-sm">
@@ -70,7 +70,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">TOTAL ANUAL</h5>
-                                <span class="h2 font-weight-bold mb-0">2,356</span>
+                                <span class="h2 font-weight-bold mb-0">{{$ano}}</span>
                             </div>
                         </div>
                         <p class="mt-3 mb-0 text-sm">

@@ -23,6 +23,6 @@ class Mesa extends Model
 
   public function productos()
   {
-    return $this->belongsToMany('App\Producto')->withPivot('cantidad');
+    return $this->belongsToMany('App\Producto');
   }
 }

@@ -7,6 +7,8 @@ use App\Mesa;
 use App\MesasProductos;
 use App\Producto;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\MesaFormRequest;
+use App\Http\Requests\MesaProductoFormRequest;
 
 class MesasController extends Controller
 {
@@ -29,7 +31,7 @@ class MesasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(MesaFormRequest $request)
     {
         $nueva = new Mesa();
         $nueva->nombre = $request->input('nombre');
@@ -89,7 +91,7 @@ class MesasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request)
+    public function edit(MesaFormRequest $request)
     {
         $mesaEdit = Mesa::find($request->input('mesa_id'));
 
@@ -122,7 +124,7 @@ class MesasController extends Controller
         //
     }
 
-    public function createProductoMesa(Request $request)
+    public function createProductoMesa(MesaProductoFormRequest $request)
     {
         $nuevo = new MesasProductos();
         $nuevo->producto_id = $request->input('producto_id');
@@ -144,7 +146,7 @@ class MesasController extends Controller
     }
 
 
-    public function editProductoMesa(Request $request, $id)
+    public function editProductoMesa(MesaProductoFormRequest $request, $id)
     {
       //Busca la tupla con el producto de esa mesa
         $productosMesa = MesasProductos::where('mesa_id', $id)->where('producto_id', $request->input('producto_id'))->first();

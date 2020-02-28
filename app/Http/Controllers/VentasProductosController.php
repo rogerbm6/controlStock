@@ -9,6 +9,7 @@ use App\Producto;
 use App\Venta;
 use App\MesasProductos;
 use App\VentasProductosMesa;
+use App\Http\Requests\VentaProductoFormRequest;
 
 class VentasProductosController extends Controller
 {
@@ -17,9 +18,10 @@ class VentasProductosController extends Controller
       //mesas para la vista
       $mesas = Mesa::all();
 
-      $ventaOriginal = Venta::find($id);
+      $ventaOriginal=Venta::find($id);
+
       //todos los id de productos en tabla pivote
-      $ventas = VentasProductosMesa::all()->where('venta_id',$id);
+      $ventas = VentasProductosMesa::where('venta_id',$id)->get();
       //array para productos
       $productos = [];
       //guarda array de ['productomesa_id'(tabla pivote de venta y productos_mesas)=>['producto', 'cantidad en tabla pivote']]
@@ -28,8 +30,31 @@ class VentasProductosController extends Controller
         //busca en otra tabla pivote (MesasProductos) el id que contiene el producto y mesa de nuestro pivote actual
         $producto = MesasProductos::find($venta->productomesa_id);
         //añade al array
-        $productos+=["$venta->productomesa_id"=>['producto'=>Producto::find($producto->producto_id), 'cantidad'=>$venta->cantidad]];
+        $productos+=["$venta->productomesa_id"=>['producto'=>Producto::find($producto->producto_id), 'cantidad'=>$venta->cantidad, 'mesa'=>Mesa::find($producto->mesa_id), 'ventaProducto'=>$venta]];
       }
+
+/*------cambia el precio total con el descuento-------*/
+      //Suma los precios y les resta el porcentaje de descuento
+      $precios =0;
+        //recorre todos los productos de la venta y suma sus precios
+        for ($i=0; $i < count($ventas); $i++) {
+          //busca el id del producto en la tabla pivote MesasProductos
+          $idProductoMesa = MesasProductos::find($ventas[$i]->productomesa_id);
+          //busca y suma los precios en la tabla productos
+          $precioProducto = Producto::find($idProductoMesa->producto_id);
+          //precio multiplicado por cantidad
+          $precios += (($precioProducto->precio)*($ventas[$i]->cantidad));
+        }
+
+
+        //dd($ventaOriginal);
+        //el valor del descueto
+        $descuento = ($precios * $ventaOriginal->porcentaje)/100;
+
+        $ventaOriginal->precio_venta = $precios-$descuento;
+
+
+      $ventaOriginal->save();
 
       return view('ventas/show', ['productos'=> $productos, 'venta'=>$ventaOriginal, 'mesas'=>$mesas]);
   }
@@ -55,7 +80,7 @@ class VentasProductosController extends Controller
   }
 
 
-  public function create($venta, $mesa, Request $request)
+  public function create($venta, $mesa, VentaProductoFormRequest $request)
   {
     //Busca la pivote de mesa y producto, y le resta la cantidad
       $productoMesa = MesasProductos::where('mesa_id', $mesa)->where('producto_id', $request->input('producto_id'))->first();
@@ -85,26 +110,43 @@ class VentasProductosController extends Controller
 
       $productoAdd->save();
       /*--------------*/
-      //Suma los precios y les resta el porcentaje de descuento
-      $preciosProd =VentasProductosMesa::where('venta_id', $venta)->get();
-      $precios =0;
-      //recorre todos los productos de la venta y suma sus precios
-      for ($i=0; $i < count($preciosProd); $i++) {
-        //busca el id del producto en la tabla pivote MesasProductos
-        $idProductoMesa = MesasProductos::find($preciosProd[$i]->productomesa_id);
-        //busca y suma los precios en la tabla productos
-        $precioProducto = Producto::find($idProductoMesa->producto_id);
-        //precio multiplicado por cantidad
-        $precios += (($precioProducto->precio)*($preciosProd[$i]->cantidad));
-      }
 
-      $ventaReal = Venta::find($venta);
-      //el valor del descueto
-      $descuento = ($precios * $ventaReal->porcentaje)/100;
 
-      $ventaReal->precio_venta = $precios-$descuento;
+      return redirect()->action('VentasProductosController@show', ['id'=>$venta]);
+  }
 
-      $ventaReal->save();
+  public function update(VentaProductoFormRequest $request, $venta)
+  {
+      $venta = VentasProductosMesa::find($request->input('ventaProducto'));
+      //variable que guarda la diferencia de la cantidad
+      $diferencia = $venta->cantidad - $request->input('cantidad');
+
+      $venta->cantidad=$request->input('cantidad');
+
+      $venta->save();
+
+      //busca el registro para cambiar la cantidad
+      $productoASumar = MesasProductos::find($venta->productomesa_id);
+
+      $productoASumar->cantidad += $diferencia;
+      $productoASumar->save();
+
+      return redirect()->action('VentasProductosController@show', ['id'=>$venta->venta_id]);
+  }
+
+  public function destroy(Request $request, $venta)
+  {
+      $ventas = VentasProductosMesa::find($request->input('ventaProducto'));
+      //cantidad para sumar en el inventario
+      $cantidadSumar = $ventas->cantidad;
+      //busca el registro para sumar la cantidad eliminada
+      $productoASumar = MesasProductos::find($ventas->productomesa_id);
+
+      $ventas->delete();
+      //suma la cantidad
+      $productoASumar->cantidad += $cantidadSumar;
+
+      $productoASumar->save();
 
       return redirect()->action('VentasProductosController@show', ['id'=>$venta]);
   }

@@ -11,49 +11,73 @@
 |
 */
 
-Route::resource('/', 'BoardController');
+Route::get('/', function () {
+    return view('/auth/login');
+});
 
-Route::resource('/mesas', 'MesasController');
 
-Route::post('/mesas/create', 'MesasController@Create');
+Auth::routes(['verify' => 'true']);
 
-Route::get('/mesas/show/{id}', 'MesasController@show');
+Route::group(['middleware' => 'verified'], function () {
 
-Route::put('/mesas/show/{id}', 'MesasController@editProductoMesa');
+  Route::resource('/home', 'BoardController')->middleware('auth');
 
-Route::post('/mesas/createProductoMesa', 'MesasController@createProductoMesa');
+  Route::resource('/mesas', 'MesasController')->middleware('auth')->middleware('language');
 
-Route::delete('/mesas/deleteProducto/{mesa}', 'MesasController@deleteProductoMesa');
+  Route::post('/mesas/create', 'MesasController@Create')->middleware('auth')->middleware('language');
 
-Route::delete('/mesas/deleteMesa/{mesa}', 'MesasController@deleteMesa');
+  Route::get('/mesas/show/{id}', 'MesasController@show')->middleware('auth')->middleware('language');
 
-Route::put('/mesas', 'MesasController@edit');
+  Route::put('/mesas/show/{id}', 'MesasController@editProductoMesa')->middleware('auth')->middleware('language');
 
-//ProductosController
-Route::resource('/productos', 'ProductosController');
+  Route::post('/mesas/createProductoMesa', 'MesasController@createProductoMesa')->middleware('auth')->middleware('language');
 
-Route::get('/productos/{tipo}', 'ProductosController@show');
+  Route::delete('/mesas/deleteProducto/{mesa}', 'MesasController@deleteProductoMesa')->middleware('auth');
 
-Route::post('/productos/create', 'ProductosController@create');
+  Route::delete('/mesas/deleteMesa/{mesa}', 'MesasController@deleteMesa')->middleware('auth');
 
-Route::put('/productos/update', 'ProductosController@update');
+  Route::put('/mesas', 'MesasController@edit')->middleware('auth')->middleware('language');
 
-Route::delete('/productos/delete', 'ProductosController@delete');
+  //ProductosController
+  Route::resource('/productos', 'ProductosController')->middleware('auth')->middleware('language');
 
-//VentasController
+  Route::get('/productos/{tipo}', 'ProductosController@show')->middleware('auth')->middleware('language');
 
-Route::resource('/ventas', 'VentasController');
+  Route::post('/productos/create', 'ProductosController@create')->middleware('auth');
 
-Route::post('/ventas/create', 'VentasController@create');
+  Route::put('/productos/update', 'ProductosController@update')->middleware('auth');
 
-Route::put('/ventas/{id}', 'VentasController@update');
+  Route::delete('/productos/delete', 'ProductosController@delete')->middleware('auth');
 
-Route::delete('/ventas/{id}', 'VentasController@destroy');
+  //VentasController
 
-//VentasProductosMesa
+  Route::resource('/ventas', 'VentasController')->middleware('auth')->middleware('language');
 
-Route::get('/ventas/productos/{id}', 'VentasProductosController@show');
+  Route::post('/ventas/create', 'VentasController@create')->middleware('auth')->middleware('language');
 
-Route::get('/ventas/productos/{venta}/add/{mesa}', 'VentasProductosController@mesa');
+  Route::put('/ventas/{id}', 'VentasController@update')->middleware('auth');
 
-Route::post('/ventas/productos/{venta}/add/{mesa}', 'VentasProductosController@create');
+  Route::delete('/ventas/{id}', 'VentasController@destroy')->middleware('auth');
+
+  //VentasProductosMesa
+  //ver todos los productos
+  Route::get('/ventas/productos/{id}', 'VentasProductosController@show')->middleware('auth')->middleware('language');
+  //ver los productos de la mesa
+  Route::get('/ventas/productos/{venta}/add/{mesa}', 'VentasProductosController@mesa')->middleware('auth')->middleware('language');
+  //agregar nuevo producto
+  Route::post('/ventas/productos/{venta}/add/{mesa}', 'VentasProductosController@create')->middleware('auth');
+  //actualiza la cantidad del producto
+  Route::put('/ventas/productos/{venta}', 'VentasProductosController@update')->middleware('auth');
+  //elimina el registro de la tabla pivote
+  Route::delete('/ventas/productos/{venta}', 'VentasProductosController@destroy')->middleware('auth');
+
+  Route::get('logout', 'Auth\LoginController@logout');
+
+
+  //ImprimirControll
+  Route::name('imprimir')->get('/imprimir', 'ImprimirController@show')->middleware('auth')->middleware('language');
+});
+
+Auth::routes();
+
+Route::get('/home', 'BoardController@index')->middleware('auth')->name('home');

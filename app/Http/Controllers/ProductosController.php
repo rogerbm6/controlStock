@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\MesasProductos;
 use App\Producto;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\ProductoFormRequest;
 
 class ProductosController extends Controller
 {
@@ -28,7 +29,7 @@ class ProductosController extends Controller
   }
 
 
-  public function create(Request $request)
+  public function create(ProductoFormRequest $request)
   {
       $producto = new Producto;
 
@@ -43,7 +44,7 @@ class ProductosController extends Controller
       return redirect()->action('ProductosController@show', ['tipo'=>$producto->tipo]);
   }
 
-  public function update(Request $request)
+  public function update(ProductoFormRequest $request)
   {
       $producto = Producto::find($request->input('producto_id'));
 

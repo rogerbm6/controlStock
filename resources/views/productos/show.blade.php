@@ -8,6 +8,21 @@
 
 
 <div class="col-md-11 m-2 p-2">
+
+    @if ($errors->any())
+    <div class="row justify-content-center">
+        <div class="col-sm-12">
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{$error}}</li>
+                        @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
+    @endif
+
     <div class="card mb-5">
         <div class="card-header border-0">
             <div class="row align-items-center">
@@ -40,8 +55,8 @@
                                             <label for="cantidad">Producto</label>
                                             <input type="text" name="nombre" class="form-control">
 
-                                            <label for="cantidad">Precio</label>
-                                            <input type="number" step="0.01" class="form-control" id="precio" name="precio" placeholder="precio">
+                                            <label for="precio">Precio</label>
+                                            <input type="text" step="0.01" class="form-control" id="precio" name="precio" placeholder="precio">
 
                                             <button type="submit" class="mt-2 btn btn-sm btn-primary">guardar</button>
                                         </div>
@@ -109,12 +124,12 @@
                                                 </div>
                                             </form>
                                             <form action="/productos/delete" method="POST" style="display:inline">
-                                            {{ method_field('DELETE') }}
-                                            {!! csrf_field() !!}
-                                            <input name="producto_id" type="hidden" value="{{$producto->id}}">
-                                            <button type="submit" class="btn btn-sm btn-danger ml-2" style="display:inline">
-                                                Borrar
-                                            </button>
+                                                {{ method_field('DELETE') }}
+                                                {!! csrf_field() !!}
+                                                <input name="producto_id" type="hidden" value="{{$producto->id}}">
+                                                <button type="submit" class="btn btn-sm btn-danger ml-2" style="display:inline">
+                                                    Borrar
+                                                </button>
                                             </form>
                                         </div>
                                         <div class="modal-footer">
