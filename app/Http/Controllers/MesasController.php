@@ -21,7 +21,7 @@ class MesasController extends Controller
      */
     public function index()
     {
-        $mesas = DB::table('mesas')->paginate(4);
+        $mesas = DB::table('mesas')->orderBy('id')->paginate(4);
         $productos = DB::table('productos')->count();
         //  $venta = DB::table('ventas')->select('precio_venta');
         //dd($venta);

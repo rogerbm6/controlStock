@@ -52,8 +52,8 @@
                                     <div class="row p-3">
                                         @foreach ($mesas as $mesa)
 
-                                        <div class="col-sm-2">
-                                            <a class="btn btn-sm btn-primary m-1" href="{{$venta->id}}/add/{{$mesa->id}}">{{$mesa->nombre}}</a>
+                                        <div class="col-sm-4">
+                                            <a class="btn btn-sm btn-primary m-3" href="{{$venta->id}}/add/{{$mesa->id}}">{{$mesa->nombre}}</a>
                                         </div>
 
 
