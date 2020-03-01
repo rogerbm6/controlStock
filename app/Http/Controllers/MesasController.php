@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Mesa;
 use App\MesasProductos;
@@ -19,7 +21,7 @@ class MesasController extends Controller
      */
     public function index()
     {
-        $mesas = Mesa::all();
+        $mesas = DB::table('mesas')->paginate(4);
         $productos = DB::table('productos')->count();
         //  $venta = DB::table('ventas')->select('precio_venta');
         //dd($venta);
@@ -33,9 +35,24 @@ class MesasController extends Controller
      */
     public function create(MesaFormRequest $request)
     {
-        $nueva = new Mesa();
-        $nueva->nombre = $request->input('nombre');
-        $nueva->save();
+        $id = DB::table('mesas')->insertGetId(
+            ['nombre' => $request->input('nombre')]
+        );
+
+
+        if ($request->hasFile('imagen')) {
+            if ($request->file('imagen')->isValid()) {
+                $imagen = Mesa::findOrFail($id);
+                $extension = $request->file('imagen')->extension();
+                $imagen->imagen = $id.'.'.$imagen->nombre.'.'.$extension;
+                $request->file('imagen')->storeAs(
+                  'mesas',
+                  $id.'.'.$imagen->nombre.'.'.$extension,
+                  ['disk'=>'public']
+              );
+                $imagen->save();
+            }
+        }
 
 
         return redirect()->action('MesasController@index');
@@ -45,7 +62,9 @@ class MesasController extends Controller
     {
       //Busca la tupla con el producto de esa mesa
         $productosMesa = MesasProductos::where('mesa_id', $mesa)->delete();
-        $mesaBorrar = Mesa::where('id', $mesa)->delete();
+        $mesaBorrar=Mesa::findOrFail($mesa);
+        Storage::disk('public')->delete('mesas/'.$mesaBorrar->imagen);
+        $mesaBorrar->delete();
 
         return redirect()->action('MesasController@index');
     }
@@ -96,6 +115,23 @@ class MesasController extends Controller
         $mesaEdit = Mesa::find($request->input('mesa_id'));
 
         $mesaEdit->nombre = $request->input('nombre');
+
+        if ($request->hasFile('imagen')) {
+            if ($request->file('imagen')->isValid()) {
+                $extension = $request->file('imagen')->extension();
+                //borrar
+                Storage::disk('public')->delete('mesas/'.$mesaEdit->imagen);
+                //database
+                $mesaEdit->imagen = $mesaEdit->id.'.'.$mesaEdit->nombre.'.'.$extension;
+                //server
+                $request->file('imagen')->storeAs(
+                  'mesas',
+                  $mesaEdit->id.'.'.$mesaEdit->nombre.'.'.$extension,
+                  ['disk'=>'public']
+              );
+            }
+        }
+
 
         $mesaEdit->save();
         return redirect()->action('MesasController@index');

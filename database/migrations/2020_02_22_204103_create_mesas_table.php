@@ -16,6 +16,7 @@ class CreateMesasTable extends Migration
         Schema::create('mesas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre',32);
+            $table->string('imagen',32)->nullable();
             $table->timestamps();
         });
     }

@@ -53,6 +53,7 @@ class BoardController extends Controller
         $usuario->name= $request->input('name');
         $usuario->email=$request->input('email');
         $usuario->password=Hash::make($request->input('password'));
+        $usuario->remember_token = Str::random(10);
         $usuario->save();
       }
 

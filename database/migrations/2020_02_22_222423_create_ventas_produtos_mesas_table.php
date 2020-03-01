@@ -20,7 +20,7 @@ class CreateVentasProdutosMesasTable extends Migration
           $table->unsignedInteger('venta_id');
           $table->unsignedInteger('productomesa_id');
 
-          $table->foreign('venta_id')->references('id')->on('ventas');
+          $table->foreign('venta_id')->references('id')->on('ventas')->onDelete('cascade');
 
           $table->integer('cantidad');
 

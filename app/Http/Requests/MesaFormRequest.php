@@ -26,6 +26,7 @@ class MesaFormRequest extends FormRequest
         return
         [
           'nombre'            => 'required|max:45|min:4',
+          'imagen'            => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
 
