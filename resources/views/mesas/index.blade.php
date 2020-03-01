@@ -35,7 +35,7 @@
       <div class="col-xl-3 col-md-6 col-sm-4">
         <div class="card card-stats">
           <!-- Card body -->
-          <div class="card-body p-3" style="background-image: url('{{url('storage/mesas/'.$mesa->imagen)}}');">
+          <div class="card-body p-3">
             <div class="row">
               <div class="col-12">
                 <span class="h2 font-weight-bold mb-0"><a href="/mesas/show/{{$mesa->id}}">{{$mesa->nombre}}</a></span>
@@ -69,9 +69,6 @@
                         <label for="nombre">Cambiar nombre</label>
 
                         <input type="text" class="form-control" id="nombre" name="nombre" value="{{$mesa->nombre}}">
-                        <label class="btn btn-primary mt-3">
-                          Imagen <input type="file" name="imagen" hidden>
-                        </label>
 
                         <button type="submit" class="mt-2 btn btn-sm btn-primary">cambiar</button>
                       </div>
@@ -107,9 +104,6 @@
           <div class="form-group p-2">
             <label for="nombre">Nombre</label>
             <input type="text" class="form-control" name="nombre" placeholder="Nombre aqui" value="{{old('nombre')}}">
-            <label class="btn btn-primary mt-3">
-              Imagen <input type="file"  name="imagen"hidden>
-            </label>
 
             <button type="submit" class="mt-2 btn btn-primary">guardar</button>
           </div>
