@@ -56,7 +56,7 @@
                                             <input type="text" name="nombre" class="form-control">
 
                                             <label for="precio">Precio</label>
-                                            <input type="text" step="0.01" class="form-control" id="precio" name="precio" placeholder="precio">
+                                            <input type="number" step="0.01" class="form-control" id="precio" name="precio" placeholder="precio">
 
                                             <button type="submit" class="mt-2 btn btn-sm btn-primary">guardar</button>
                                         </div>

@@ -57,7 +57,7 @@
                                             </select>
 
                                             <label for="cantidad">Cantidad</label>
-                                            <input type="text" class="form-control" id="cantidad" name="cantidad" placeholder="Cantidad" value="{{old('cantidad')}}">
+                                            <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="Cantidad" value="{{old('cantidad')}}">
 
                                             <button type="submit" class="mt-2 btn btn-sm btn-primary">guardar</button>
                                         </div>
@@ -156,7 +156,7 @@
                                                 <div class="form-group p-2 text-justify">
 
                                                     <label for="cantidad">Cantidad</label>
-                                                    <input type="text" class="form-control" id="cantidad" name="cantidad" value="{{$value['cantidad']}}" placeholder="Cantidad">
+                                                    <input type="number" class="form-control" id="cantidad" name="cantidad" value="{{$value['cantidad']}}" placeholder="Cantidad">
 
                                                     <button type="submit" style="display:inline" class="mt-2 btn btn-sm btn-primary">guardar</button>
                                                 </div>
