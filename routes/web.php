@@ -19,44 +19,45 @@ Route::get('/', function () {
 Auth::routes(['verify' => 'true']);
 
 Route::group(['middleware' => 'verified'], function () {
-
+  //inicio de la aplicación
   Route::resource('/home', 'BoardController')->middleware('auth');
-
+  //muestra las mesas solas
   Route::resource('/mesas', 'MesasController')->middleware('auth')->middleware('language');
-
+  //crea una mesa vacia
   Route::post('/mesas/create', 'MesasController@Create')->middleware('auth')->middleware('language');
-
+  //muestra una mesa y sus productos
   Route::get('/mesas/show/{id}', 'MesasController@show')->middleware('auth')->middleware('language');
-
+  //edita un producto de una mesa
   Route::put('/mesas/show/{id}', 'MesasController@editProductoMesa')->middleware('auth')->middleware('language');
-
+  //crea un producto en una mesa
   Route::post('/mesas/createProductoMesa', 'MesasController@createProductoMesa')->middleware('auth')->middleware('language');
-
+  //borra un producto en una mesa
   Route::delete('/mesas/deleteProducto/{mesa}', 'MesasController@deleteProductoMesa')->middleware('auth');
-
+  //borra la mesa y los productos dentro(cascade)
   Route::delete('/mesas/deleteMesa/{mesa}', 'MesasController@deleteMesa')->middleware('auth');
-
+  //actualiza nombre e imagen de mesa
   Route::put('/mesas', 'MesasController@edit')->middleware('auth')->middleware('language');
 
   //ProductosController
+  //muestra categorias
   Route::resource('/productos', 'ProductosController')->middleware('auth')->middleware('language');
-
+  //muestra los productos de una categoria
   Route::get('/productos/{tipo}', 'ProductosController@show')->middleware('auth')->middleware('language');
-
+  //crea producto de una categoria
   Route::post('/productos/create', 'ProductosController@create')->middleware('auth');
-
+  //actualiza producto
   Route::put('/productos/update', 'ProductosController@update')->middleware('auth');
-
+  //elimina producto
   Route::delete('/productos/delete', 'ProductosController@delete')->middleware('auth');
 
   //VentasController
-
+  //muestra todas las ventas
   Route::resource('/ventas', 'VentasController')->middleware('auth')->middleware('language');
-
+  //crear venta
   Route::post('/ventas/create', 'VentasController@create')->middleware('auth')->middleware('language');
-
+  //actualizar venta
   Route::put('/ventas/{id}', 'VentasController@update')->middleware('auth');
-
+  //eliminar venta
   Route::delete('/ventas/{id}', 'VentasController@destroy')->middleware('auth');
 
   //VentasProductosMesa

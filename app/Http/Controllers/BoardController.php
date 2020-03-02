@@ -12,6 +12,7 @@ use App\MesasProductos;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegistroFormRequest;
+use Illuminate\Support\Str;
 
 class BoardController extends Controller
 {

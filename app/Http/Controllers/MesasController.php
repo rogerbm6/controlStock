@@ -87,18 +87,19 @@ class MesasController extends Controller
      */
     public function show($id)
     {
+        //todos los productos para el select de agregar producto
         $allProductos = Producto::orderBy('precio')->get();
-
+        //mesa que se quiere ver
         $mesa = Mesa::find($id);
-        //coge productos de esa mesa
+        //todos los productos de esa mesa
         $productosMesa = MesasProductos::all()->where('mesa_id', $id);
         //array para los productos de la mesa
         $productos = [];
         foreach ($productosMesa as $value) {
-            //añade un array con la clave (id del producto) y de valor otro array objeto producto y cantidad
+            //añade un array con la clave (id del producto) y de valor otro array asociativo [objeto-producto y cantidad]
             $productos+=  [$value->producto_id => ['producto'=>Producto::find($value->producto_id), 'cantidad'=>$value->cantidad]];
         }
-        //dd($productosMesa);
+        //ordeno el array, para que siempre muestre el mismo orden
         asort($productos);
 
         return view('mesas/show', ['mesa'=>$mesa, 'productos'=>$productos, 'allProductos' => $allProductos]);
@@ -162,11 +163,14 @@ class MesasController extends Controller
 
     public function createProductoMesa(MesaProductoFormRequest $request)
     {
+        //crea el objeto
         $nuevo = new MesasProductos();
+        //id de producto, sacado en vista
         $nuevo->producto_id = $request->input('producto_id');
+        //id de mesa en url y formulario
         $nuevo->mesa_id = $request->input('mesa_id');
+        //cantidad y formulario
         $nuevo->cantidad = $request->input('cantidad');
-        //dd($nuevo);
         $nuevo->save();
 
 

@@ -17,19 +17,17 @@ class VentasProductosController extends Controller
   {
       //mesas para la vista
       $mesas = Mesa::all();
-
+      //venta con porcentaje y total
       $ventaOriginal=Venta::find($id);
-
       //todos los id de productos en tabla pivote
       $ventas = VentasProductosMesa::where('venta_id',$id)->get();
       //array para productos
       $productos = [];
-      //guarda array de ['productomesa_id'(tabla pivote de venta y productos_mesas)=>['producto', 'cantidad en tabla pivote']]
+      //añade al array [id_productomesa=>['producto'=>obletoProducto, 'cantidad'=>cantidad(VentasProductosMesa), 'mesa'=>objetoMesa, 'ventaProducto'=>objetoVentasProductosMesa]]
       //los guarda
       foreach ($ventas as $venta) {
         //busca en otra tabla pivote (MesasProductos) el id que contiene el producto y mesa de nuestro pivote actual
         $producto = MesasProductos::find($venta->productomesa_id);
-        //añade al array
         $productos+=["$venta->productomesa_id"=>['producto'=>Producto::find($producto->producto_id), 'cantidad'=>$venta->cantidad, 'mesa'=>Mesa::find($producto->mesa_id), 'ventaProducto'=>$venta]];
       }
 
@@ -46,8 +44,6 @@ class VentasProductosController extends Controller
           $precios += (($precioProducto->precio)*($ventas[$i]->cantidad));
         }
 
-
-        //dd($ventaOriginal);
         //el valor del descueto
         $descuento = ($precios * $ventaOriginal->porcentaje)/100;
 
