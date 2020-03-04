@@ -24,9 +24,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. --}}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <link rel="stylesheet" href="{{secure_asset('css/app.css')}}">
     <!-- Theme CSS -->
-    <link rel="stylesheet" href="{{asset('css/theme-6.css')}}">
+    <link rel="stylesheet" href="{{secure_asset('css/theme-6.css')}}">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
@@ -54,9 +54,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. --}}
     </div>
 
     <!-- Javascript -->
-    <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
-    <script src="{{asset('js/popper.min.js')}}"></script>
-    <script src="{{asset('js/bootstrap.min.js')}}"></script>
+    <script src="{{secure_asset('js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{secure_asset('js/popper.min.js')}}"></script>
+    <script src="{{secure_asset('js/bootstrap.min.js')}}"></script>
 
 </body>
 
