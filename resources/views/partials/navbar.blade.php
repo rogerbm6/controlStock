@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>. --}}
 <header class="header text-center">
-    <h1 class="blog-name pt-lg-4 mb-0"><a href="/home">LalaSlou admin</a></h1>
+    <h1 class="blog-name pt-lg-4 mb-0"><a href="/home">{{ config('app.name', 'Laravel') }} admin</a></h1>
 
     <nav class="navbar navbar-expand-lg navbar-dark">
 
