@@ -26,7 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. --}}
 
         <div id="navigation" class="collapse navbar-collapse flex-column">
             <div class="profile-section pt-3 pt-lg-0">
-                <img class="profile-image mb-3 rounded-circle mx-auto" href='/home' src="{{asset('img/logo2.png')}}" alt="image">
+                <img class="profile-image mb-3 img-thumbnail mx-auto" href='/home' src="{{secure_asset('img/logo2.png')}}" alt="image">
 
                 <hr>
             </div>
